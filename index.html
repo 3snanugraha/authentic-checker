@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>MyClothes</title>
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <style>
+         #reader {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+         }
+         
+         /* Animasi Fade In */
+         @keyframes fadeIn {
+            from {
+               opacity: 0;
+               transform: translateY(-20px);
+            }
+            to {
+               opacity: 1;
+               transform: translateY(0);
+            }
+         }
+      
+         .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+         }
+      
+         /* Animasi Typewriter */
+         @keyframes typewriter {
+            from {
+               width: 0;
+            }
+            to {
+               width: 100%;
+            }
+         }
+      
+         @keyframes blinkTextCursor {
+            from {
+               border-right-color: gold;
+            }
+            to {
+               border-right-color: transparent;
+            }
+         }
+      
+         /* Animasi untuk hasil scan dengan Typewriter */
+         .result-text {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards, blinkTextCursor 0.75s steps(44) infinite normal;
+            transition: color 0.3s ease-in-out;
+            width: 0; /* Mulai dari 0 untuk typewriter effect */
+         }
+      
+         .authentic {
+            color: gold;
+            border-color: gold;
+            animation: typewriter 4s steps(44) 1s forwards, blinkTextCursor 0.75s steps(44) infinite normal;
+         }
+      
+         .not-authentic {
+            color: rgb(85, 59, 59);
+            border-color: rgb(85, 59, 59);
+            animation: typewriter 4s steps(44) 1s forwards, blinkTextCursor 0.75s steps(44) infinite normal;
+         }
+      </style>
+      
+   </head>
+   <body>
+      <div class="header_section">
+         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+               <a class="navbar-brand" href="index.html"><img src="images/logo.png"></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav ml-auto">
+                     <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+         </div>
+      </div>
+
+      <div class="banner_section layout_padding">
+         <div class="container">
+            <div id="main_slider" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <div class="row">
+                        <div class="col-sm-12">
+                           <h1 class="banner_taital">Verifikasi Keaslian Pakaian Anda</h1>
+                           <p class="banner_text">Dengan MyClothes, Anda bisa dengan mudah memindai kode QR di pakaian Anda untuk memastikan keasliannya. Belanja dengan percaya diri setiap kali!</p>
+                           <!-- Modal Trigger Button -->
+                           <div class="started_text">
+                           <a href="#" data-toggle="modal" data-target="#qrModal">
+                           <i class="fa fa-qrcode" aria-hidden="true"></i> Upload QR / Scan QR
+                           </a>
+                           </div>                          
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
+               <i class="fa fa-angle-left"></i>
+               </a>
+               <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
+               <i class="fa fa-angle-right"></i>
+               </a>
+            </div>
+         </div>
+      </div>
+
+      <div class="about_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="about_taital">Hasil Scan QR</div>
+                  <div id="scan-result" style="display: none;"></div>
+                  <!-- Hasil Otentikasi akan ditampilkan di sini -->
+                  <div id="auth-result" class="result-text"></div>
+
+                  <p class="about_text">Setelah Anda memindai QR code yang terdapat pada pakaian, sistem kami akan segera memberi tahu apakah pakaian tersebut asli atau tidak. Dengan teknologi verifikasi MyClothes, Anda dapat memastikan keaslian setiap produk sebelum memutuskan untuk membeli atau memakainya.</p>
+                  <div class="read_bt"><a href="#">Selengkapnya</a></div>
+               </div>
+               <div class="col-md-6">
+                  <div class="about_img"><img src="images/about-img.png"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="models_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <h1 class="models_taital">Cara Kerja</h1>
+                  <p class="models_text">Menggunakan MyClothes sangat mudah. Pindai kode QR di pakaian Anda dan verifikasi keasliannya dalam hitungan detik. Belanja dengan percaya diri setiap kali.</p>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="blog_section layout_padding">
+         <div class="blog_section_2">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-md-6 padding_left_0">
+                     <div class="blog_img"><img src="images/blog-img.png"></div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="blog_taita_main">
+                        <h3 class="blog_taital_1">Terbaru dalam Teknologi Fashion</h3>
+                        <p class="ipsum_text">Pelajari bagaimana teknologi mengubah industri fashion. Tetap terupdate dengan tren terbaru dan inovasi dalam autentikasi pakaian bersama MyClothes.</p>
+                        <div class="readmore_bt"><a href="#">Baca Selengkapnya</a></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="contact_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <h1 class="contact_taital">Hubungi Kami</h1>
+               </div>
+            </div>
+            <div class="contact_section_2">
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="mail_section_1">
+                        <input type="text" class="mail_text" placeholder="Nama" name="Name">
+                        <input type="text" class="mail_text" placeholder="Nomor Telepon" name="Phone Number"> 
+                        <input type="text" class="mail_text" placeholder="Email" name="Email">
+                        <textarea class="massage-bt" placeholder="Pesan" rows="5" id="comment" name="Message"></textarea>
+                        <div class="send_bt"><a href="#">KIRIM</a></div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="map_main">
+                        <div class="map-responsive">
+                           <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&amp;q=MyClothes+Headquarters" width="600" height="368" frameborder="0" style="border:0; width: 100%;" allowfullscreen=""></iframe>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="footer_section layout_padding">
+         <div class="container">
+            <p class="copyright_text" class="text-light">2024 Semua Hak Dilindungi. Didukung oleh MyClothes.</p>
+         </div>
+      </div>
+
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+      <script src="js/plugin.js"></script>
+      <script src="js/custom.js"></script>
+
+      <!-- Modal Structure -->
+      <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="qrModalLabel">Pilih Opsi</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div>
+                     <button id="scan-qr" class="btn btn-primary">Scan QR Code</button>
+                  </div>
+                  <div id="reader" class="fade-in"></div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <script>
+         // Initialize the QR code scanner
+         const html5QrCode = new Html5Qrcode("reader");
+         const scanResultContainer = document.getElementById('scan-result');
+         const authResultContainer = document.getElementById('auth-result');
+      
+         document.getElementById("scan-qr").addEventListener("click", function() {
+            html5QrCode.start(
+               { facingMode: "environment" },
+               {
+                  fps: 10,
+                  qrbox: 250
+               },
+               qrCodeMessage => {
+                  // Stop scanning after a successful scan
+                  html5QrCode.stop().then(ignore => {
+                     // Close the modal after scanning
+                     $('#qrModal').modal('hide');
+      
+                     // Clear previous result
+                     authResultContainer.innerHTML = "";
+                     authResultContainer.style.opacity = 0;
+                     authResultContainer.style.width = "0"; // Reset width for typewriter effect
+      
+                     // Check the scanned QR code
+                     let resultText;
+                     if (qrCodeMessage === "MyClothes") {
+                        authResultContainer.classList.add('authentic');
+                        authResultContainer.classList.remove('not-authentic');
+                        resultText = "Produkmu Otentik";
+                     } else {
+                        authResultContainer.classList.add('not-authentic');
+                        authResultContainer.classList.remove('authentic');
+                        resultText = "Produkmu tidak Otentik";
+                     }
+      
+                     // Show the result with typewriter effect
+                     setTimeout(() => {
+                        authResultContainer.innerHTML = resultText;
+                        authResultContainer.style.display = "block";
+                        authResultContainer.style.opacity = 1;
+                     }, 500);
+      
+                     // Scroll to the result section after modal closes with delay
+                     setTimeout(() => {
+                        document.getElementById('auth-result').scrollIntoView({
+                           behavior: 'smooth',
+                           block: 'center'
+                        });
+                     }, 700); // Ensure modal fully closes before scrolling
+                  }).catch(err => {
+                     console.error("Failed to stop scanning.", err);
+                  });
+               },
+               errorMessage => {
+                  // Handle scan errors (optional)
+                  console.warn(`QR Code no longer in front of camera. Error: ${errorMessage}`);
+               })
+            .catch(err => {
+               console.error("Unable to start scanning.", err);
+            });
+         });
+      </script>
+      
+      
+   </body>
+</html>
